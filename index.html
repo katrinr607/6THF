@@ -307,31 +307,30 @@
 
   <div id="popupMessage"></div>
 
-  <div id="proposalModal">
-    <div id="proposalContent">
-      <div id="proposalRing"></div>
-      <div id="proposalMessage">
-Six months have passed — six months of growing, loving, and celebrating this journey with you.
+  <div id="envelopePopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center;">
+  <div style="background: #fff0f5; padding: 2em; border-radius: 15px; text-align: center; position: relative; max-width: 90%; max-height: 90%; overflow-y: auto; animation: fadeIn 1s ease; box-shadow: 0 0 10px #ffb6c1;">
+    <div style="width: 100px; height: 100px; background-image: url('https://i.imgur.com/qgdduwX.png'); background-size: contain; background-repeat: no-repeat; margin: 0 auto 1em; animation: ringPulse 1.5s infinite alternate;"></div>
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 1.1em; color: #c2185b; white-space: pre-wrap; margin-top: 1em;">
+      Six months have passed. Six months of growing, loving, and celebrating this love with you.
 
-If you’ve noticed, in every message I write to you, I always mention how we’ve made it through both the highs and the lows together. That’s not just a passing thought — it’s something I hold close. I’m more than grateful that I’ve had the chance to experience all of it with you, six beautiful times in a row.
+      If you’ve noticed, in every message I write to you, I always mention how we’ve made it through both the highs and the lows together. Which isn't just a passing thought but something I hold close. I’m more than grateful that I’ve had the chance to experience all of it with you, six beautiful times in a row.
 
-Everything we’ve gone through is proof of how strong we are now. It’s built our trust, deepened our comfort with each other, and allowed us to be vulnerable in ways we never thought possible. And honestly, that’s something I’m really proud of — us.
+      Everything we’ve gone through is proof of how strong we are now. It has built our trust, deepened our comfort with each other, and allowed us to be vulnerable in ways we never thought possible. And honestly, that’s something I’m really proud of - us.
 
-If I had to go through the same six months all over again just to make it to one year with you, I would. And this time, I’d go through it even better — more patient, more understanding, more loving.
+      If I had to go through the same six months all over again just to make it to one year with you, I would. And this time, I’d go through it even better — more patient, more understanding, more loving.
 
-So here’s my pinky promise: to another six months, to the years ahead, and to everything in between.
-With all my love, always.
-      </div>
-      <button id="proposalClose">susususus</button>
-      <audio id="proposalAudio" autoplay loop>
-        <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_fbfaa92b7d.mp3" type="audio/mpeg">
-      </audio>
+      So here’s my pinky promise; to another six months, to the years ahead, and to everything in between.
+      With all my love, always.
     </div>
+    <button onclick="closeEnvelope()" style="margin-top: 1.5em; background: #ffc4dd; border: 2px solid #ff99bb; padding: 0.5em 1em; border-radius: 10px; cursor: pointer; font-weight: bold;">Close</button>
   </div>
+</div>
+
+   
 <script>
   // Typewriter effect
   const typewriterText = document.getElementById("typewriterText");
-  const message = "Thank you for making it this far with me";
+  const message = "Thank you for staying. For making it this far with me. I know I’m not always easy to love, but you stayed and that means everything.";
   let i = 0;
   function type() {
     if (i < message.length) {
@@ -440,12 +439,12 @@ With all my love, always.
   let gameCtx, catcher, heartsArr, gameInterval, score = 0;
   let messagesShown = 0;
   const heartMessages = [
-    "You're loved ❤️", "You make me smile 😊", "Thank you for staying 🫶",
-    "I’m lucky to have you 🍀", "Forever starts with you 💍", "You matter most 🌟",
-    "You’re my favorite person 🧸", "You feel like home 🏡", "Always, in all ways 💌",
-    "Can’t wait for more days with you ⏳", "You're my calm in the storm 🌧️", "Sweetest hello 💬",
-    "Warmest hug 🤗", "Strongest support 🛡️", "Cutest face 🐰", "Brightest light 🌞",
-    "Safe space 🛏️", "Biggest cheerleader 📣", "Secret keeper 🔐", "End game 🕹️", "I love you 💘"
+    "You are sooo loved by me", "I really love how you can make everything feel better in an instant", "Thank you for always choosing us, me",
+    "I’m so grateful to have you, bebe", "WOWOWOW 5 POINTS NA SIYA", "I'll be your kakampi always, in all  ways",
+    "I appreciate you so so so much", "You deserve all the gooood things", "I love you latte, bebe. To more matcha drinks with youuu",
+    "OH SHET, 10 PTS That's my baby right there!", "You're my calm in the storm 🌧️", "Sweetest hello 💬",
+    "ihh I still get butterflies even after all this time", "We’re not perfect, but you make love feel easy", "To more laughs and laughlaughs pls :D", "",
+    "Thank so much for putting up with my attitude", "For tolerating me", "or loving me even on my WTF days", "We're half way through, and this is just the beginning of beyond", "YAY 20, VERY GOOD KA !!!"
   ];
 
   function startGame() {
@@ -492,7 +491,7 @@ With all my love, always.
         if (score >= 21) {
           clearInterval(gameInterval);
           setTimeout(() => {
-            showPopup("🎉 You caught all 21 hearts! Love fully caught! 💖");
+            showPopup("🎉 Yay my bebe caught all 21 hearts! To more 21st of the month, my love!");
             closeGame();
           }, 500);
           return;
@@ -527,27 +526,21 @@ With all my love, always.
     if (e.key === "ArrowRight") catcher.x += 15;
   });
 
-  // Surprise Modal Logic
-  const modal = document.getElementById("modal");
-  const overlay = document.getElementById("overlay");
-  const proposalModal = document.getElementById("proposalModal");
-  const proposalClose = document.getElementById("proposalClose");
-  const proposalAudio = document.getElementById("proposalAudio");
 
   function showModal() {
-  proposalModal.style.display = "flex";
-  proposalAudio.play();
+  document.getElementById("envelopePopup").style.display = "flex";
 }
+
 
   function closeModal() {
     modal.classList.remove("show");
     overlay.classList.remove("show");
   }
 
-  proposalClose.addEventListener("click", () => {
-    proposalModal.style.display = "none";
-    proposalAudio.pause();
-  });
+  function closeEnvelope() {
+  document.getElementById("envelopePopup").style.display = "none";
+}
+
 </script>
 </body>
 </html>
