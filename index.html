@@ -6,7 +6,7 @@
   <title>Happy 6th Monthsary!</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       font-family: 'IBM Plex Mono', monospace;
@@ -21,7 +21,9 @@
     }
 
     .container {
-      padding: 2em;
+      padding: 2em 1em;
+      max-width: 600px;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -30,7 +32,7 @@
 
     h1 {
       color: #ff4081;
-      font-size: 2.8em;
+      font-size: 2.4em;
       background: #fff0f8;
       padding: 0.6em 1em;
       border: 3px dashed #ffb6c1;
@@ -50,12 +52,11 @@
     }
 
     .typewriter {
-      font-size: 1.3em;
+      font-size: 1.2em;
       white-space: pre-wrap;
       overflow: hidden;
       border-right: 2px solid #e91e63;
-      width: 90%;
-      max-width: 600px;
+      width: 100%;
       min-height: 100px;
       margin: 1em auto;
       padding: 1em;
@@ -63,7 +64,6 @@
       border: 2px dotted #ffc0cb;
       transform: rotate(1.5deg);
       box-shadow: 4px 4px 5px rgba(0,0,0,0.1);
-      font-family: 'IBM Plex Mono', monospace;
     }
 
     button {
@@ -97,8 +97,8 @@
       border: 2px dashed #ffd700;
       transform: rotate(-2deg);
       box-shadow: 3px 3px 5px rgba(0,0,0,0.1);
-      width: 300px;
-      font-family: 'IBM Plex Mono', monospace;
+      width: 100%;
+      max-width: 300px;
     }
 
     input[type=range] {
@@ -110,6 +110,37 @@
       margin-top: 0.5em;
       color: #e91e63;
     }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2em;
+      }
+      .typewriter {
+        font-size: 1em;
+      }
+    }
+    /* Game canvas container styling */
+    #gameCanvas {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      aspect-ratio: 3 / 4;
+      border: 2px dashed #ff69b4;
+      border-radius: 10px;
+      background: #fffefc;
+      touch-action: none;
+      display: block;
+      margin: 0 auto;
+    }
+
     .modal, .overlay {
       display: none;
       position: fixed;
@@ -124,47 +155,21 @@
     }
 
     .modal.show, .overlay.show {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     .modal {
       background: #fff9f9;
-      max-width: 90%;
       padding: 2em;
       margin: auto;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-2deg);
-      position: fixed;
       border-radius: 15px;
       text-align: center;
       z-index: 11;
+      max-width: 90%;
       box-shadow: 4px 4px 15px rgba(0,0,0,0.2);
-      font-family: 'IBM Plex Mono', monospace;
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    #gameCanvas {
-      display: block;
-      margin: 1em auto;
-      border: 2px dashed #ff69b4;
-      border-radius: 10px;
-      background: #fffefc;
-      transform: rotate(2deg);
-      touch-action: none;
-    }
-
-    #scoreDisplay {
-      font-weight: bold;
-      color: #ff1493;
-      font-family: 'IBM Plex Mono', monospace;
     }
 
     .mobile-controls {
@@ -179,6 +184,12 @@
       font-size: 1.5em;
     }
 
+    #scoreDisplay {
+      font-weight: bold;
+      color: #ff1493;
+      margin-top: 0.5em;
+    }
+
     #popupMessage {
       position: fixed;
       top: 20%;
@@ -189,49 +200,13 @@
       border: 2px dashed #ff69b4;
       border-radius: 15px;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 1.4em;
+      font-size: 1.2em;
       color: #e91e63;
       z-index: 9999;
       box-shadow: 4px 4px 15px rgba(0,0,0,0.2);
       transition: opacity 0.3s ease;
       display: none;
       opacity: 0;
-    }
-
-    #proposalModal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #proposalContent {
-      background: #fff0f5;
-      padding: 2em;
-      border-radius: 15px;
-      text-align: center;
-      position: relative;
-      max-width: 90%;
-      max-height: 90%;
-      overflow-y: auto;
-      animation: fadeIn 1s ease;
-      box-shadow: 0 0 10px #ffb6c1;
-    }
-
-    #proposalRing {
-      width: 100px;
-      height: 100px;
-      background-image: url('https://i.imgur.com/qgdduwX.png'); /* Replace with a pinky promise icon */
-      background-size: contain;
-      background-repeat: no-repeat;
-      margin: 0 auto 1em;
-      animation: ringPulse 1.5s infinite alternate;
     }
 
     @keyframes ringPulse {
@@ -243,29 +218,12 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    #proposalMessage {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 1.1em;
-      color: #c2185b;
-      white-space: pre-wrap;
-      margin-top: 1em;
-    }
-
-    #proposalClose {
-      margin-top: 1.5em;
-      background: #ffc4dd;
-      border: 2px solid #ff99bb;
-      padding: 0.5em 1em;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
   </style>
 </head>
 <body>
   <canvas id="confetti"></canvas>
   <canvas id="hearts"></canvas>
+
   <div class="container">
     <h1>🎉 Happy 6th Monthsary!</h1>
 
@@ -274,14 +232,12 @@
     <button onclick="showModal()">🎁 Tap for a Surprise</button>
 
     <div class="spotify-player">
-  <iframe style="border-radius:12px"
-          src="https://open.spotify.com/embed/track/4s0m05iPPuTeFlJxAQivGy?utm_source=generator"
-          width="300" height="80" frameborder="0"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"></iframe>
-</div>
-
-
+      <iframe style="border-radius:12px"
+              src="https://open.spotify.com/embed/track/4s0m05iPPuTeFlJxAQivGy?utm_source=generator"
+              width="300" height="80" frameborder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"></iframe>
+    </div>
 
     <div class="love-meter">
       <p>How much do you love me? 😘</p>
@@ -308,27 +264,25 @@
   <div id="popupMessage"></div>
 
   <div id="envelopePopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center;">
-  <div style="background: #fff0f5; padding: 2em; border-radius: 15px; text-align: center; position: relative; max-width: 90%; max-height: 90%; overflow-y: auto; animation: fadeIn 1s ease; box-shadow: 0 0 10px #ffb6c1;">
-    <div style="width: 100px; height: 100px; background-image: url('https://i.imgur.com/qgdduwX.png'); background-size: contain; background-repeat: no-repeat; margin: 0 auto 1em; animation: ringPulse 1.5s infinite alternate;"></div>
-    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 1.1em; color: #c2185b; white-space: pre-wrap; margin-top: 1em;">
-      Six months have passed. Six months of growing, loving, and celebrating this love with you.
+    <div style="background: #fff0f5; padding: 2em; border-radius: 15px; text-align: center; max-width: 90%; max-height: 90%; overflow-y: auto; animation: fadeIn 1s ease; box-shadow: 0 0 10px #ffb6c1;">
+      <div style="width: 100px; height: 100px; background-image: url('https://i.imgur.com/qgdduwX.png'); background-size: contain; background-repeat: no-repeat; margin: 0 auto 1em; animation: ringPulse 1.5s infinite alternate;"></div>
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 1.1em; color: #c2185b; white-space: pre-wrap; margin-top: 1em;">
+        Six months have passed. Six months of growing, loving, and celebrating this love with you.
 
-      If you’ve noticed, in every message I write to you, I always mention how we’ve made it through both the highs and the lows together. Which isn't just a passing thought but something I hold close. I’m more than grateful that I’ve had the chance to experience all of it with you, six beautiful times in a row.
+        If you’ve noticed, in every message I write to you, I always mention how we’ve made it through both the highs and the lows together. Which isn't just a passing thought but something I hold close. I’m more than grateful that I’ve had the chance to experience all of it with you, six beautiful times in a row.
 
-      Everything we’ve gone through is proof of how strong we are now. It has built our trust, deepened our comfort with each other, and allowed us to be vulnerable in ways we never thought possible. And honestly, that’s something I’m really proud of - us.
+        Everything we’ve gone through is proof of how strong we are now. It has built our trust, deepened our comfort with each other, and allowed us to be vulnerable in ways we never thought possible. And honestly, that’s something I’m really proud of - us.
 
-      If I had to go through the same six months all over again just to make it to one year with you, I would. And this time, I’d go through it even better — more patient, more understanding, more loving.
+        If I had to go through the same six months all over again just to make it to one year with you, I would. And this time, I’d go through it even better — more patient, more understanding, more loving.
 
-      So here’s my pinky promise; to another six months, to the years ahead, and to everything in between.
-      With all my love, always.
+        So here’s my pinky promise; to another six months, to the years ahead, and to everything in between.
+        With all my love, always.
+      </div>
+      <button onclick="closeEnvelope()" style="margin-top: 1.5em; background: #ffc4dd; border: 2px solid #ff99bb; padding: 0.5em 1em; border-radius: 10px; cursor: pointer; font-weight: bold;">Close</button>
     </div>
-    <button onclick="closeEnvelope()" style="margin-top: 1.5em; background: #ffc4dd; border: 2px solid #ff99bb; padding: 0.5em 1em; border-radius: 10px; cursor: pointer; font-weight: bold;">Close</button>
   </div>
-</div>
-
-   
 <script>
-  // Typewriter effect
+  // Typewriter Effect
   const typewriterText = document.getElementById("typewriterText");
   const message = "Thank you for staying. For making it this far with me. I know I’m not always easy to love, but you stayed and that means everything.";
   let i = 0;
@@ -346,6 +300,38 @@
     const output = document.getElementById("loveOutput");
     output.innerText = val + "% in love " + (val >= 70 ? "💖" : val >= 30 ? "🥰" : "😳");
   }
+
+  // Confetti
+  const confettiCanvas = document.getElementById("confetti");
+  const ctx = confettiCanvas.getContext("2d");
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+  const confetti = Array.from({ length: 100 }).map(() => ({
+    x: Math.random() * confettiCanvas.width,
+    y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+    r: Math.random() * 6 + 4,
+    d: Math.random() * 150 + 50,
+    color: `hsl(${Math.random() * 360}, 100%, 70%)`
+  }));
+
+  function drawConfetti() {
+    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    for (let c of confetti) {
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+      ctx.fillStyle = c.color;
+      ctx.fill();
+    }
+    for (let c of confetti) {
+      c.y += Math.cos(c.d) + 2;
+      if (c.y > confettiCanvas.height) {
+        c.y = -10;
+        c.x = Math.random() * confettiCanvas.width;
+      }
+    }
+  }
+
+  setInterval(drawConfetti, 33);
 
   // Floating Hearts
   const heartCanvas = document.getElementById("hearts");
@@ -388,39 +374,6 @@
   }
 
   setInterval(drawFloatingHearts, 40);
-
-  // Confetti animation
-  const canvas = document.getElementById("confetti");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const confetti = Array.from({ length: 150 }).map(() => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height - canvas.height,
-    r: Math.random() * 6 + 4,
-    d: Math.random() * 150 + 50,
-    color: `hsl(${Math.random() * 360}, 100%, 70%)`
-  }));
-
-  function drawConfetti() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let c of confetti) {
-      ctx.beginPath();
-      ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-      ctx.fillStyle = c.color;
-      ctx.fill();
-    }
-    for (let c of confetti) {
-      c.y += Math.cos(c.d) + 2;
-      if (c.y > canvas.height) {
-        c.y = -10;
-        c.x = Math.random() * canvas.width;
-      }
-    }
-  }
-
-  setInterval(drawConfetti, 33);
-
   // Popup Message
   function showPopup(message) {
     const popup = document.getElementById("popupMessage");
@@ -435,7 +388,7 @@
     }, 2000);
   }
 
-  // Game
+  // Game Variables
   let gameCtx, catcher, heartsArr, gameInterval, score = 0;
   let messagesShown = 0;
   const heartMessages = [
@@ -450,13 +403,17 @@
   function startGame() {
     document.getElementById("gameModal").classList.add("show");
     document.getElementById("gameOverlay").classList.add("show");
+
     const canvas = document.getElementById("gameCanvas");
     gameCtx = canvas.getContext("2d");
+
     catcher = { x: 120, y: 360, width: 60, height: 20 };
     heartsArr = [];
     score = 0;
     messagesShown = 0;
+
     document.getElementById("scoreDisplay").innerText = "Score: 0";
+
     for (let i = 0; i < 5; i++) {
       heartsArr.push({
         x: Math.random() * 260,
@@ -465,6 +422,7 @@
         speed: 1 + Math.random() * 2
       });
     }
+
     gameInterval = setInterval(drawGame, 30);
   }
 
@@ -472,22 +430,27 @@
     gameCtx.clearRect(0, 0, 300, 400);
     gameCtx.fillStyle = "#ff4081";
     gameCtx.fillRect(catcher.x, catcher.y, catcher.width, catcher.height);
+
     for (let h of heartsArr) {
       h.y += h.speed;
+
       if (h.y > 400) {
         h.y = -20;
         h.x = Math.random() * 280;
       }
+
       if (
         h.y + h.size > catcher.y &&
         h.x + h.size > catcher.x &&
         h.x < catcher.x + catcher.width
       ) {
         score++;
-        if (messagesShown < 21) {
+
+        if (messagesShown < heartMessages.length) {
           showPopup(heartMessages[messagesShown] || "You caught a heart! ❤️");
           messagesShown++;
         }
+
         if (score >= 21) {
           clearInterval(gameInterval);
           setTimeout(() => {
@@ -496,10 +459,12 @@
           }, 500);
           return;
         }
+
         h.y = -20;
         h.x = Math.random() * 280;
         document.getElementById("scoreDisplay").innerText = "Score: " + score;
       }
+
       drawHeart(gameCtx, h.x, h.y, h.size, "red");
     }
   }
@@ -526,21 +491,13 @@
     if (e.key === "ArrowRight") catcher.x += 15;
   });
 
-
   function showModal() {
-  document.getElementById("envelopePopup").style.display = "flex";
-}
-
-
-  function closeModal() {
-    modal.classList.remove("show");
-    overlay.classList.remove("show");
+    document.getElementById("envelopePopup").style.display = "flex";
   }
 
   function closeEnvelope() {
-  document.getElementById("envelopePopup").style.display = "none";
-}
-
+    document.getElementById("envelopePopup").style.display = "none";
+  }
 </script>
 </body>
 </html>
